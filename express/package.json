@@ -1,5 +1,5 @@
 {
-    "name": "ma-todolist",
+    "name": "Todo List, again...",
     "version": "0.1.0",
     "dependencies": {
         "body-parser": "~1.10.1",

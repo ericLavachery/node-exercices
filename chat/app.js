@@ -25,4 +25,9 @@ io.sockets.on('connection', function (socket, pseudo) {
     });
 });
 
+io.sockets.on('disconnect', function (socket, pseudo) {
+    // On signale aux autres clients quand quelqu'un se déconnecte
+    socket.broadcast.emit('vieux_client', pseudo);
+});
+
 server.listen(8080);

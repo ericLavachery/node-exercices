@@ -20,16 +20,18 @@ io.sockets.on('connection', function (socket, pseudo) {
         socket.broadcast.emit('nouveau_client', pseudo);
     });
 
+    // On signale aux autres clients quand quelqu'un se déconnecte
+    socket.on('disconnect', function (pseudo) {
+        if (socket.pseudo != null) {
+            socket.broadcast.emit('ciao_client', socket.pseudo);
+        }
+    });
+
     // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
     socket.on('message', function (message) {
         message = ent.encode(message);
         socket.broadcast.emit('message', {pseudo: socket.pseudo, message: message});
     });
-});
-
-io.sockets.on('disconnect', function (socket, pseudo) {
-    // On signale aux autres clients quand quelqu'un se déconnecte
-    socket.broadcast.emit('ciao_client', pseudo);
 });
 
 server.listen(8080);

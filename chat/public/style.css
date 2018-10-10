@@ -1,0 +1,17 @@
+body{
+    background-color: #DDDDDD;
+}
+
+#zone_chat strong {
+    color: white;
+    background-color: black;
+    padding: 2px;
+}
+
+#con {
+    display: none;
+}
+
+#pascon {
+    display: block;
+}

@@ -13,7 +13,9 @@
     </head>
 
     <body>
-        <h1>Le super Chat de goutière!</h1>
+        <h1>Chat de goutière</h1>
+
+        <p><input type="button" value="Déconexion" id="bye" /></p>
 
         <form action="/" method="post" id="formulaire_chat">
             <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
@@ -51,7 +53,7 @@
             })
 
             // Quand un client se déconnecte, on affiche l'information
-            socket.on('vieux_client', function(pseudo) {
+            socket.on('ciao_client', function(pseudo) {
                 $('#zone_chat').prepend('<p><em><u>' + pseudo + '</u> a autre chose à foutre...</em></p>');
             })
 
@@ -68,6 +70,11 @@
             function putMessage(pseudo, message) {
                 $('#zone_chat').prepend('<p><strong>' + pseudo + '</strong> ' + message + '</p>');
             }
+
+            // fonction du bouton bye bye
+            $('#bye').click(function () {
+                socket.disconnect();
+            })
         </script>
     </body>
 </html>

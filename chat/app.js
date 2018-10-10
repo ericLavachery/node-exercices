@@ -4,6 +4,8 @@ var app = require('express')(),
     io = require('socket.io').listen(server),
     ent = require('ent'), // Permet de bloquer les caractères HTML (sécurité équivalente à htmlentities en PHP)
     fs = require('fs');
+    io.set('heartbeat timeout', 60000); // Client vers serveur (serveur mort si pas de réponse)
+    io.set('heartbeat interval', 25000); // Serveur vers client (client mort si pas de réponse)
 
 // Chargement de la page index.html
 app.get('/', function (req, res) {
@@ -27,7 +29,7 @@ io.sockets.on('connection', function (socket, pseudo) {
 
 io.sockets.on('disconnect', function (socket, pseudo) {
     // On signale aux autres clients quand quelqu'un se déconnecte
-    socket.broadcast.emit('vieux_client', pseudo);
+    socket.broadcast.emit('ciao_client', pseudo);
 });
 
 server.listen(8080);

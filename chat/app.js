@@ -18,13 +18,14 @@ var con = mysql.createConnection({
 
 var history = [];
 // charge l'historique au démarage du serveur
-con.connect(function(err) {
-    if (err) throw err;
+con.connect(function(error) {
+    if (error) throw error;
     var sql = "SELECT * FROM history";
-    con.query(sql, function (err, result) {
-        if (err) throw err;
-        // si pas d'erreur
-        console.log('ok');
+    con.query(sql, function (error, result) {
+        if (error) throw error;
+        // RowDataPacket to JSON (is this the right way? - but it works...)
+        history = JSON.parse(JSON.stringify(result));
+        console.log('history loaded');
     });
 });
 
@@ -56,9 +57,10 @@ io.sockets.on('connection', function (socket, pseudo) {
         var book = {pseudo: socket.pseudo, message: message};
         history.push(book);
         socket.broadcast.emit('message', book);
+        // enregistrer dans la db
         var sql = "INSERT INTO history (pseudo, message) VALUES ('" + socket.pseudo + "', '" + message + "')";
-        con.query(sql, function (err, result) {
-            if (err) throw err;
+        con.query(sql, function (error, result) {
+            if (error) throw error;
             console.log("writen in DB : " + socket.pseudo + " : " + message);
         });
     });

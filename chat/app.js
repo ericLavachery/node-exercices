@@ -29,6 +29,9 @@ con.connect(function(error) {
     });
 });
 
+var express = require('express');
+app.use('/static', express.static(__dirname + '/public'));
+
 // Chargement de la page index.html
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');

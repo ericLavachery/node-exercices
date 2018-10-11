@@ -1,17 +1,31 @@
 body{
-    background-color: #DDDDDD;
+    background-color: #cae7db;
+    background-image: url('/static/img/blackcat.png');
+    background-repeat: no-repeat;
+    color: #000000;
+    font-family: arial;
+    margin-left: 30px;
+    margin-right: 30px;
 }
-
+#zone_chat {
+    margin-top: 20px;
+    background-color: #fe75cf;
+    opacity: 0.8;
+    padding: 10px 20px 10px 20px;
+    min-width: 300px;
+    border-radius: 10px;
+}
 #zone_chat strong {
     color: white;
     background-color: black;
     padding: 2px;
 }
-
 #con {
     display: none;
 }
-
 #pascon {
     display: block;
+}
+.rouge {
+    color: #b50016;
 }

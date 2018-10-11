@@ -7,6 +7,18 @@ var app = require('express')(),
     io.set('heartbeat timeout', 60000); // Client vers serveur (serveur mort si pas de réponse)
     io.set('heartbeat interval', 25000); // Serveur vers client (client mort si pas de réponse)
 
+// connect to mysql
+var mysql = require('mysql');
+var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "zen8070$mysql"
+});
+con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connected to MySQL!");
+});
+
 var history = [];
 
 // Chargement de la page index.html

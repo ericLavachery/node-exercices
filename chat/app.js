@@ -12,14 +12,21 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "zen8070$mysql"
-});
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected to MySQL!");
+    password: "zen8070$mysql",
+    database: "chatDG"
 });
 
 var history = [];
+// charge l'historique au démarage du serveur
+con.connect(function(err) {
+    if (err) throw err;
+    var sql = "SELECT * FROM history";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        // si pas d'erreur
+        console.log('ok');
+    });
+});
 
 // Chargement de la page index.html
 app.get('/', function (req, res) {
@@ -49,6 +56,11 @@ io.sockets.on('connection', function (socket, pseudo) {
         var book = {pseudo: socket.pseudo, message: message};
         history.push(book);
         socket.broadcast.emit('message', book);
+        var sql = "INSERT INTO history (pseudo, message) VALUES ('" + socket.pseudo + "', '" + message + "')";
+        con.query(sql, function (err, result) {
+            if (err) throw err;
+            console.log("writen in DB : " + socket.pseudo + " : " + message);
+        });
     });
 });
 

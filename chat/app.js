@@ -34,9 +34,9 @@ io.sockets.on('connection', function (socket, pseudo) {
     // Dès qu'on reçoit un message, on récupère le pseudo de son auteur et on le transmet aux autres personnes
     socket.on('message', function (message) {
         message = ent.encode(message);
-        data = {pseudo: socket.pseudo, message: message};
-        history.push(data);
-        socket.broadcast.emit('message', {pseudo: socket.pseudo, message: message});
+        var book = {pseudo: socket.pseudo, message: message};
+        history.push(book);
+        socket.broadcast.emit('message', book);
     });
 });
 
